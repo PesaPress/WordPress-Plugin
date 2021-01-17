@@ -18,7 +18,7 @@ class PP_Views_Admin_Settings extends PP_Core_View {
 		ob_start();
 		?>
 		<div class="wrap uk-padding-small">
-			<h1><span uk-icon="icon: settings; ratio: 1.5"></span><?php _e( 'Settings', 'pesapress' ); ?></h1>
+			<h1><?php _e( 'Settings', 'pesapress' ); ?></h1>
 			<div class="uk-padding-remove uk-container uk-background-default uk-height-viewport">
 				<div class="uk-invisible pesapress-message uk-padding-remove uk-margin-remove" uk-alert></div>
 				<ul class="uk-margin-small-top" uk-tab="animation: uk-animation-fade">

@@ -53,7 +53,7 @@ class PP_Views_Admin_Logs extends PP_Core_View {
 						</div>
 					</form>
 				</div>
-				<div class="uk-width-1-3@s uk-padding-remove-left">
+				<div class="uk-width-1-5@s uk-padding-remove-left">
 					<form class="export-logs-form" action="<?php wp_nonce_url( admin_url( 'admin.php?action=pesapress_bulk_logs' ), 'pesapress_export_logs' ); ?>" method="POST">
 						<?php
 							$this->ui->render(
@@ -67,7 +67,7 @@ class PP_Views_Admin_Logs extends PP_Core_View {
 						<button class="uk-button uk-button-secondary"><?php _e( 'Export', 'pesapress' ); ?></button>
 					</form>
 				</div>
-				<div class="uk-width-1-3@s uk-padding-remove-left">
+				<div class="uk-width-expand@s uk-padding-remove-left">
 					<form class="uk-grid-small filter-logs-form" name="filter-logs-form" uk-grid>
 						<?php
 							wp_nonce_field( 'pesapress_filter_logs' );

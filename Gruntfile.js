@@ -48,26 +48,6 @@ module.exports = function( grunt ) {
 
 		// BUILD branches.
 		plugin_branches: {
-			exclude_pro: [
-				'./free',
-				'./README.MD',
-				'./readme.txt',
-				'./screenshot-*',
-				'./app/assets/css/src/**',
-				'./app/assets/js/src/**',
-				'./app/assets/img/src/**',
-				'./vendor',
-			],
-			exclude_free: [
-				'./README.MD',
-				'./changelog.txt',
-				'./premium',
-				'./lib/wpmudev-dashboard',
-				'./app/assets/css/src/**',
-				'./app/assets/js/src/**',
-				'./app/assets/img/src/**',
-				'./vendor',
-			],
 			include_files: [
 				'**',
 				'!**/_src/**',
@@ -101,12 +81,7 @@ module.exports = function( grunt ) {
 				'!.log',
 				'!vendor/**',
 				'!composer**'
-			],
-			main_pro: 'pesapress-pro.php',
-			main_free: 'pesapress.php',
-			base: 'master',
-			pro: 'pp-pro',
-			free: 'pp-free',
+			]
 		},
 
 		// BUILD patterns to exclude code for specific builds.
@@ -160,9 +135,7 @@ module.exports = function( grunt ) {
 		},
 		
 		plugin_dir: 'pesapress/',
-		pro_plugin_dir: 'pesapress-pro/',
 		plugin_file: 'pesapress.php',
-		free_plugin_file: '.pesapress.php'
 	};
 	// -------------------------------------------------------------------------
 	var key, ind, newkey, newval;
@@ -364,57 +337,29 @@ module.exports = function( grunt ) {
 				],
 				dot: true,
 				filter: 'isFile'
-			},
-			release_pro: {
-				src: [
-					'release/<%= pkg.version %>-pro/',
-					'release/<%= pkg.name %>-pro-<%= pkg.version %>.zip'
-				]
-			},
-			release_free: {
-				src: [
-					'release/<%= pkg.freeVersion %>-free/',
-					'release/<%= pkg.name %>-free-<%= pkg.freeVersion %>.zip'
-				]
-			},
-			pro: conf.plugin_branches.exclude_pro,
-			free: conf.plugin_branches.exclude_free
+			}
 		},
 
 		// BUILD - Copy all plugin files to the release subdirectory.
 		copy: {
-			pro: {
-				src: conf.plugin_branches.include_files,
-				dest: 'release/<%= pkg.version %>-pro/'
-			},
-			free: {
-				src: conf.plugin_branches.include_files,
-				dest: 'release/<%= pkg.version %>-free/'
-			},
+			files: {
+                src: conf.plugin_branches.include_files,
+                dest: 'release/<%= pkg.name %>-<%= pkg.version %>/'
+            }
 		},
 
 		// BUILD - Create a zip-version of the plugin.
 		compress: {
-			pro: {
-				options: {
-					mode: 'zip',
-					archive: './release/<%= pkg.name %>-pro-<%= pkg.version %>.zip'
-				},
-				expand: true,
-				cwd: 'release/<%= pkg.version %>-pro/',
-				src: [ '**/*' ],
-				dest: conf.pro_plugin_dir
-			},
-			free: {
-				options: {
-					mode: 'zip',
-					archive: './release/<%= pkg.name %>-<%= pkg.version %>.zip'
-				},
-				expand: true,
-				cwd: 'release/<%= pkg.version %>-free/',
-				src: [ '**/*' ],
-				dest: conf.plugin_dir
-			},
+			files: {
+                options: {
+                    mode: 'zip',
+                    archive: './release/<%= pkg.name %>-<%= pkg.version %>.zip'
+                },
+                expand: true,
+                cwd: 'release/<%= pkg.name %>-<%= pkg.version %>/',
+                src: [ '**/*' ],
+                dest: conf.plugin_dir
+            }
 		},
 
 		// BUILD - update the translation index .po file.
@@ -433,96 +378,7 @@ module.exports = function( grunt ) {
 					type: 'wp-plugin' // wp-plugin or wp-theme
 				}
 			}
-		},
-
-		// BUILD: Replace conditional tags in code.
-		replace: {
-			pro: {
-				options: {
-					patterns: conf.plugin_patterns.pro
-				},
-				files: [conf.plugin_patterns.files]
-			},
-			free: {
-				options: {
-					patterns: conf.plugin_patterns.free
-				},
-				files: [conf.plugin_patterns.files]
-			}
-		},
-
-		// BUILD: Rename the main plugin file.
-		rename: {
-			pro: {
-				files: [
-					{
-						src: conf.plugin_file,
-						dest: conf.plugin_branches.main_pro
-					}
-				],
-			},
-			free: {
-				files: [
-					{
-						src: conf.free_plugin_file,
-						dest: conf.plugin_branches.main_free
-					}
-				],
-			},
-		},
-
-		// BUILD: Git control (check out branch).
-		gitcheckout: {
-			pro: {
-				options: {
-					verbose: true,
-					branch: conf.plugin_branches.pro,
-					overwrite: true
-				}
-			},
-			free: {
-				options: {
-					branch: conf.plugin_branches.free,
-					overwrite: true
-				}
-			},
-			base: {
-				options: {
-					branch: conf.plugin_branches.base
-				}
-			}
-		},
-
-		// BUILD: Git control (add files).
-		gitadd: {
-			pro: {
-				options: {
-				verbose: true, all: true }
-			},
-			free: {
-				options: { all: true }
-			},
-		},
-
-		// BUILD: Git control (commit changes).
-		gitcommit: {
-			pro: {
-				verbose: true,
-				options: {
-					message: 'Built from: ' + conf.plugin_branches.base,
-					allowEmpty: true
-				},
-				files: { src: ['.'] }
-			},
-			free: {
-				options: {
-					message: 'Built from: ' + conf.plugin_branches.base,
-					allowEmpty: true
-				},
-				files: { src: ['.'] }
-			},
-		},
-
+		}
 
 	} );
 
@@ -554,18 +410,9 @@ module.exports = function( grunt ) {
 		// Checkout the destination branch.
 		//grunt.task.run( 'gitcheckout:master' );
 
-		for ( i in build ) {
-			branch = build[i];
-			grunt.log.subhead( 'Building [' + branch + ']...' );
-			// Remove code and files that does not belong to this version.
-			grunt.task.run( 'replace:' + branch );
-			grunt.task.run( 'clean:' + branch );
-			grunt.task.run( 'rename:' + branch );
-
-			grunt.task.run( 'clean:release_' + branch );
-			grunt.task.run( 'copy:' + branch );
-			grunt.task.run( 'compress:' + branch );
-		}
+		grunt.task.run( 'clean' );
+		grunt.task.run( 'copy' );
+		grunt.task.run( 'compress' );
 	});
 
 	// Development tasks.

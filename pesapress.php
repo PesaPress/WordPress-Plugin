@@ -121,6 +121,17 @@ if ( ! class_exists( 'PesaPress' ) ) :
 		 * @since 1.0.0
 		 */
 		function translate_plugin() {
+			if ( function_exists( 'determine_locale' ) ) {
+				$locale = determine_locale();
+			} else {
+				// @todo Remove when start supporting WP 5.0 or later.
+				$locale = is_admin() ? get_user_locale() : get_locale();
+			}
+	
+			$locale = apply_filters( 'plugin_locale', $locale, 'pesapress' );
+	
+			unload_textdomain( 'woocopesapressmmerce' );
+			load_textdomain( 'pesapress', WP_LANG_DIR . '/pesapress/pesapress-' . $locale . '.mo' );
 			load_plugin_textdomain( 'pesapress', false, PESAPRESS_LANG_DIR );
 		}
 
@@ -173,8 +184,8 @@ if ( ! class_exists( 'PesaPress' ) ) :
 		return PesaPress::instance();
 	}
 
-	// Set plugin globals
-	$GLOBALS['pesapress'] = pesapress();
+	//Initiate plugin
+	pesapress();
 
 endif;
 

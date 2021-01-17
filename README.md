@@ -105,26 +105,3 @@ $ svn up
 Introduction to unit testing in WordPress: http://codesymphony.co/writing-wordpress-plugin-unit-tests/
 
 ----
-
-# RELEASE
-## Full (DEV) version
-
-1. Make sure you have run `npm install` to fetch everything needed for the packaging procedure
-2. Run `grunt release:<VERSION>:full`, where `<VERSION>` is your version number (e.g. `2.1.2-BETA-1`). This will:
-	- ... check if your changelog.txt has an appropriate entry for the required version. The release process will warn if there is not.
-	- ... automatically update your `package.json` to match the supplied version.
-	- ... automatically update main plugin file to match the supplied version.
-	- ... update l10n catalog, build needed stuff, clean up stuff that doesn't go into DEV release, etc.
-	- ... pack up the versioned distributable zip in the `builds/` subdirectory.
-3. After the task is done running, *you may have unstaged/uncommitted files lying around*. Do run `git status` and commit them as needed.
-
-## Free (wordpress.org) version
-
-1. Make sure you have run `npm install` to fetch everything needed for the packaging procedure
-2. Run `grunt release:<VERSION>:free`, where `<VERSION>` is your version number (e.g. `2.1.2-BETA-1`). This will:
-	- ... check if your changelog.txt has an appropriate entry for the required version. The release process will warn if there is not.
-	- ... automatically update your `package.json` to match the supplied version.
-	- ... automatically update main plugin file to match the supplied version.
-	- ... update l10n catalog, build needed stuff, clean up stuff that doesn't go into the wordpress.org release, etc.
-	- ... pack up the versioned distributable zip in the `builds/` subdirectory.
-3. After the task is done running, *you may have unstaged/uncommitted files lying around*. Do run `git status` and commit them as needed.

@@ -3,7 +3,7 @@
  Plugin Name:         PesaPress
  Plugin URI:          https://pesapress.com/
  Description:         Integrate PesaPal to WordPress and supported integrations
- Version:             2.2.7
+ Version:             2.2.8
  Author:              alloykenya
  Author URI:          https://hubloy.com
  Text Domain:         pesapress
@@ -27,7 +27,7 @@ if ( ! class_exists( 'PesaPress' ) ) :
 		 * @since 1.0.0
 		 * @var string
 		 */
-		public $version = '2.2.6';
+		public $version = '2.2.8';
 
 
 		/**

@@ -9,7 +9,7 @@ class PP_Views_Admin_Dash extends PP_Core_View {
 	protected function header() {
 		// Show banner when there is nothing and a graph when there are some transactions
 		$header = array(
-			'page_title' => __( 'PesaPress', 'pesapress' ),
+			'page_title' => apply_filters( 'pesapress_dashboard_page_title', __( 'PesaPress', 'pesapress' ) ),
 		);
 		return $this->ui->render( 'backend/header', $header );
 	}

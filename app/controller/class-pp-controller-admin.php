@@ -123,9 +123,10 @@ class PP_Controller_Admin {
 	 * @since 1.0.0
 	 */
 	function admin_menu() {
+		$menu_title = apply_filters( 'pesapress_admin_menu_title', __( 'PesaPress', 'pesapress' ) );
 		add_menu_page(
-			__( 'PesaPress', 'pesapress' ),
-			__( 'PesaPress', 'pesapress' ),
+			$menu_title,
+			$menu_title,
 			'manage_options',
 			'pesapress',
 			null,

@@ -4,7 +4,7 @@ Tags: Pesapal, e-commerce, ecommerce, WooCommerce, PayPal, Wp Travel, Mpesa, For
 Requires at least: 4.0
 Tested up to: 5.6
 Requires PHP: 5.6
-Stable tag: 2.2.7
+Stable tag: 2.2.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,6 +67,9 @@ We only save payment transaction logs within the plugin
 
 == Changelog ==
 
+= 2.2.8 =
+* Added: New Filters
+
 = 2.2.7 =
 * Added: New shortcode attribute to how amount on payment form called `show_amount` . This is documented in the integrations page
 
@@ -98,7 +101,7 @@ We only save payment transaction logs within the plugin
 * Added: Phone field when setting is Mpesa
 
 = 2.1 =
-*Fixed: PHP 5.6 compatability
+* Fixed: PHP 5.6 compatability
 
 = 2.0 =
 * Added: Gutenberg blocks (Easily add a block in your page and configure your preferred gateway)

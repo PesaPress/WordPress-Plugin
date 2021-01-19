@@ -118,13 +118,14 @@ class PP_Core_Init {
 	 * @param object $wp_admin_bar
 	 */
 	function admin_bar_menu( $wp_admin_bar ) {
-		$args = array(
+		$menu_title = apply_filters( 'pesapress_admin_menu_title', __( 'PesaPress' ) );
+		$args 		= array(
 			'id'    => 'pesapress',
-			'title' => 'PesaPress',
+			'title' => $menu_title,
 			'href'  => admin_url( 'edit.php?page=pesapress' ),
 			'meta'  => array(
 				'class' => 'pesapress',
-				'title' => sprintf( __( '%s Settings', 'pesapress' ), 'PesaPress' ),
+				'title' => sprintf( __( '%s Settings', 'pesapress' ), $menu_title ),
 			),
 		);
 

@@ -214,10 +214,7 @@ module.exports = function( grunt ) {
 						' * <%= pkg.homepage %>\n' +
 						' * Copyright (c) <%= grunt.template.today("yyyy") %>;' +
 						' * Licensed GPLv2+' +
-						' */\n',
-					mangle: {
-						except: ['jQuery']
-					}
+						' */\n'
 				}
 			}
 		},
@@ -390,13 +387,6 @@ module.exports = function( grunt ) {
 
 	// Plugin build tasks
 	grunt.registerTask( 'build', 'Run all tasks.', function(target) {
-		var build = [], i, branch;
-
-		if ( target ) {
-			build.push( target );
-		} else {
-			build = ['pro', 'free'];
-		}
 
 		// First run unit tests.
 		//grunt.task.run( 'phpunit' );

@@ -1,4 +1,4 @@
-/*! PesaPress Pro and Free - v1.0.1
+/*! PesaPress Free - v2.2.9
  * https://alloy.co.ke/projects/pesapress
  * Copyright (c) 2021; * Licensed GPLv2+ */
 /*global $:false */

@@ -1,8 +1,8 @@
 {
   "name": "pesapress",
-  "title": "PesaPress Pro and Free",
+  "title": "PesaPress Free",
   "description": "Payments integrated",
-  "version": "1.0.1",
+  "version": "2.2.9",
   "homepage": "https://alloy.co.ke/projects/pesapress",
   "scripts": {
     "build": "grunt build",
@@ -41,5 +41,8 @@
     "load-grunt-tasks": "^5.1.0",
     "time-grunt": "^2.0.0"
   },
-  "keywords": []
+  "keywords": [],
+  "dependencies": {
+    "diff": "^5.0.0"
+  }
 }

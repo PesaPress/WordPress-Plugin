@@ -32,6 +32,13 @@ class PP_Model_Transaction {
 			if ( is_numeric( $gateway->setting_id ) && $gateway->setting_id > 0 ) {
 				$pesapress_forms = PP_Model_Forms::instance();
 				$fields          = $pesapress_forms->get_settings();
+
+				//If a form id is passed, we add a filter
+				if ( isset( $_POST['form_id'] ) ) {
+					$form_id	= sanitize_text_field( $_POST['form_id'] );
+					$fields		= apply_filters( 'pesapress_form_fields', $fields, $form_id );
+				}
+				
 				$total_fields    = count( $fields ) + 1;
 
 				if ( isset( $_POST[ "input_$total_fields" ] ) && empty( $_POST[ "input_$total_fields" ] ) ) {

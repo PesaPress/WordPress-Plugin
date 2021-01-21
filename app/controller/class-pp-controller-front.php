@@ -127,10 +127,19 @@ class PP_Controller_Front {
 			// pp-payment-return/XYZ becomes index.php?ppgateway=XYZ
 			$order_id     = $wp_query->query_vars['ppreturn'];
 			$settings     = PP_Model_Settings::instance();
+			$order_log    = new PP_Model_Log( $order_id );
+
+			/**
+			 * Process payment return
+			 * 
+			 * @since 2.2.9.2
+			 */
+			do_action( 'pesapress_process_payment_return', $order_id, $settings, $order_log );
+			
 			$success_page = $settings->get_checkout_setting( 'success_page' );
 			$success_page = get_permalink( $success_page );
 			$success_page = add_query_arg( 'order_id', $order_id, $success_page );
-			$order_log    = new PP_Model_Log( $order_id );
+			
 			if ( $order_log->log_id ) {
 				$gw_class = new PP_Model_Gateway( $order_log->gateway_id );
 				if ( is_numeric( $gw_class->setting_id ) && $gw_class->setting_id > 0 ) {

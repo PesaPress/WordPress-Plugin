@@ -86,7 +86,7 @@ class PP_Views_Admin_Settings_Fields extends PP_Core_View {
 										);
 									?>
 								</td>
-								<td><input type="text" name="ppwphp echo $count; ?>][uname]" value="<?php echo $uname; ?>" /></td>
+								<td><input type="text" name="pp[<?php echo $count; ?>][uname]" value="<?php echo $uname; ?>" /></td>
 								<td><input type="text" name="pp[<?php echo $count; ?>][initial]" value="<?php echo $initial; ?>" style="width:100%"/></td>
 								<?php } else { ?>
 								<td><input type="hidden" name="pp[<?php echo $count; ?>][name]" value="<?php echo $name; ?>" /><?php _e( $name ); ?></td>

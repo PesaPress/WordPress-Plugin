@@ -57,6 +57,15 @@ class PP_Model_Transaction {
 						$return_url = esc_url( $return_url );
 					}
 
+					/**
+					 * Filter the return url
+					 * 
+					 * @since 2.2.9.1
+					 * 
+					 * @return string
+					 */
+					$return_url = apply_filters( 'pesapress_transaction_return_url', $return_url, $gateway, $fields, $page_id );
+
 					if ( ! is_numeric( $page_id ) && ! empty( $page_id ) ) {
 						$page_id = 'N/A'; // Set N/A as page id
 					}
@@ -115,6 +124,11 @@ class PP_Model_Transaction {
 						}
 					}
 
+					/**
+					 * Action called before save
+					 */
+					do_action( 'pesapress_transaction_before_save', $errors, $gateway_id, $data_to_save );
+
 					if ( empty( $errors ) ) {
 						if ( ! empty( $data_to_save ) ) {
 							$data_to_save[]            = array(
@@ -129,6 +143,14 @@ class PP_Model_Transaction {
 							$payment_log->save();
 							$payment_log->set_fields( $data_to_save );
 							$url      = add_query_arg( 'pp-pay', $payment_log->log_id, $return_url );
+
+							/**
+							 * Action called when payment log is saved
+							 * 
+							 * @since 2.2.9.1
+							 */
+							do_action( 'pesapress_payment_log_saved', $payment_log );
+
 							$response = array(
 								'message' => __( 'Transaction saved successfully', 'pesapress' ),
 								'success' => true,
@@ -155,7 +177,7 @@ class PP_Model_Transaction {
 					'success' => false,
 				);
 			}
-			do_action( 'pesapress_transaction_before_save', $gateway_id );
+			do_action( 'pesapress_transaction_after_save', $gateway_id );
 		}
 		return $response;
 	}

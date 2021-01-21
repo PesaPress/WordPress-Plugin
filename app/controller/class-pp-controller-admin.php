@@ -33,6 +33,9 @@ class PP_Controller_Admin {
 		PP_Controller_Admin_Logs::instance();
 		PP_Controller_Admin_Gateways::instance();
 		PP_Controller_Admin_Settings::instance();
+
+		//Load other controller
+		do_action( 'pesapress_init_controller' );
 	}
 
 	/**

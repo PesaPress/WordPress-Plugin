@@ -20,6 +20,7 @@ class PP_Views_Admin_Gateways_Create extends PP_Core_View {
 		ob_start();
 		?>
 		<div class="wrap pesapress-input">
+			<div class="pesapress-message"></div>
 			<form class="uk-form-horizontal create-gateway-form">
 				<?php
 					wp_nonce_field( 'pesapress_gateway_save' );

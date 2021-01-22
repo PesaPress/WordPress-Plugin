@@ -2,7 +2,7 @@
   "name": "pesapress",
   "title": "PesaPress Free",
   "description": "Payments integrated",
-  "version": "2.2.9",
+  "version": "2.3",
   "homepage": "https://alloy.co.ke/projects/pesapress",
   "scripts": {
     "build": "grunt build",

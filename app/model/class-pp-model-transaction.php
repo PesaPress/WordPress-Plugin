@@ -142,6 +142,13 @@ class PP_Model_Transaction {
 								'name'  => 'page_id',
 								'value' => $page_id,
 							);
+							if ( isset( $_POST['form_id'] ) ) {
+								$data_to_save[]            = array(
+									'name'  => 'form_id',
+									'value' => sanitize_text_field( $_POST['form_id'] ),
+								);
+							}
+
 							$payment_log               = new PP_Model_Log();
 							$payment_log->amount       = $amount;
 							$payment_log->gateway_id   = $gateway_id;

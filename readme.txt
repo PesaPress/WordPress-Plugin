@@ -4,7 +4,7 @@ Tags: Pesapal, e-commerce, ecommerce, WooCommerce, PayPal, Wp Travel, Mpesa, For
 Requires at least: 4.0
 Tested up to: 5.6
 Requires PHP: 5.6
-Stable tag: 2.2.9.2
+Stable tag: 2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,6 +67,10 @@ We only save payment transaction logs within the plugin
 
 == Changelog ==
 
+= 2.3 =
+* New : Version bump
+* Fix : Filters for next version
+* Fix : Other fixes
 
 = 2.2.9.2 =
 * Fix : Form fields

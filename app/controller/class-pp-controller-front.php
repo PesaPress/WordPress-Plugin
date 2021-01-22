@@ -138,6 +138,7 @@ class PP_Controller_Front {
 			
 			$success_page = $settings->get_checkout_setting( 'success_page' );
 			$success_page = get_permalink( $success_page );
+			$success_page = apply_filters( 'pesapress_payment_return_success', get_permalink( $success_page ), $order_log );
 			$success_page = add_query_arg( 'order_id', $order_id, $success_page );
 			
 			if ( $order_log->log_id ) {
@@ -157,6 +158,9 @@ class PP_Controller_Front {
 					}
 				}
 			}
+
+			do_action( 'pesapress_after_process_payment_return', $order_id, $settings, $order_log );
+			
 			if ( wp_redirect( $success_page ) ) {
 				exit;
 			}

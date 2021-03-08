@@ -31,7 +31,8 @@ class PP_External_WpTravel_Filters {
 
 	public function __construct() {
 		add_filter( 'wp_travel_payment_gateway_lists', array( $this, 'gateway_list' ) );
-		add_action( 'wp_travel_payment_gateway_fields', array( $this, 'init_fields' ) );
+		add_filter( 'wp_travel_settings_fields', array( $this, 'settings_fields' ) );
+		add_action( 'wp_travel_payment_gateway_fields_pesapress', array( $this, 'init_fields' ) );
 		add_filter( 'wp_travel_before_save_settings', array( $this, 'save_settings' ) );
 		add_action( 'wp_travel_after_frontend_booking_save', array( $this, 'process' ) );
 		add_action( 'pesapress_transaction_log_update', array( $this, 'after_ipn' ) );
@@ -42,11 +43,17 @@ class PP_External_WpTravel_Filters {
 		return $gateway;
 	}
 
-	function init_fields( $settings ) {
-		$payment_option_pesapress = ( isset( $settings['settings']['payment_option_pesapress'] ) ) ? $settings['settings']['payment_option_pesapress'] : '';
-		$payment_option_gateway   = ( isset( $settings['settings']['wp_travel_pesapress']['payment_option_gateway'] ) ) ? $settings['settings']['wp_travel_pesapress']['payment_option_gateway'] : '';
+	public function settings_fields( $settings ) {
+		$settings['payment_option_pesapress'] 	= 'no';
+		$settings['pesapress_gateway']      	= '';
+		return $settings;
+	}
+
+	function init_fields( $args ) {
+		$settings = $args['settings'];
+		$payment_option_pesapress = ( isset( $settings['payment_option_pesapress'] ) ) ? $settings['payment_option_pesapress'] : '';
+		$payment_option_gateway   = ( isset( $settings['pesapress_gateway'] ) ) ? $settings['pesapress_gateway'] : '';
 		?>
-		<h3 class="wp-travel-tab-content-title"><?php esc_html_e( 'PesaPress' ); ?></h3>
 		<table class="form-table">
 			<tr>
 				<th><label for="payment_option_pesapress"><?php esc_html_e( 'Enable', 'pesapress' ); ?></label></th>
@@ -64,7 +71,7 @@ class PP_External_WpTravel_Filters {
 				<th><label for="payment_option_pesapress"><?php esc_html_e( 'Select PesaPress Gateway', 'pesapress' ); ?></label></th>
 				<td>
 					<span class="show-in-frontend checkbox-default-design">
-						<select name="payment_option_gateway" id="payment_option_gateway">
+						<select name="pesapress_gateway" id="pesapress_gateway">
 							<option value=""><?php esc_html_e( 'Select', 'pesapress' ); ?></option>
 							<?php
 								$gateways = PP_Model_Gateway::list_simple( false );
@@ -85,9 +92,9 @@ class PP_External_WpTravel_Filters {
 
 	function save_settings( $settings ) {
 		$payment_option_pesapress                                  = ( isset( $_POST['payment_option_pesapress'] ) && ! empty( $_POST['payment_option_pesapress'] ) ) ? $_POST['payment_option_pesapress'] : '';
-		$payment_option_gateway                                    = ( isset( $_POST['payment_option_gateway'] ) && ! empty( $_POST['payment_option_gateway'] ) ) ? intval( $_POST['payment_option_gateway'] ) : 0;
+		$payment_option_gateway                                    = ( isset( $_POST['pesapress_gateway'] ) && ! empty( $_POST['pesapress_gateway'] ) ) ? intval( $_POST['pesapress_gateway'] ) : 0;
 		$settings['payment_option_pesapress']                      = $payment_option_pesapress;
-		$settings['wp_travel_pesapress']['payment_option_gateway'] = $payment_option_gateway;
+		$settings['pesapress_gateway'] = $payment_option_gateway;
 		return $settings;
 	}
 
@@ -146,7 +153,7 @@ class PP_External_WpTravel_Filters {
 		}
 
 		$settings      = wp_travel_get_settings();
-		$gateway_id    = ( isset( $settings['wp_travel_pesapress']['payment_option_gateway'] ) ) ? $settings['wp_travel_pesapress']['payment_option_gateway'] : 0;
+		$gateway_id    = ( isset( $settings['pesapress_gateway'] ) ) ? $settings['pesapress_gateway'] : 0;
 		$currency_code = ( isset( $settings['currency'] ) ) ? $settings['currency'] : '';
 		PP_Model_Transaction::external_transaction( $gateway_id, $booking_id, $total, $current_url, array() );
 	}

@@ -219,24 +219,6 @@ module.exports = function( grunt ) {
 			}
 		},
 
-		// TEST - Run the PHPUnit tests.
-		phpunit: {
-			classes: {
-				dir: ''
-			},
-			options: {
-				bin: 'phpunit',
-				bootstrap: 'tests/php/bootstrap.php',
-				testsuite: 'default',
-				configuration: 'tests/php/phpunit.xml',
-				colors: true,
-				//tap: true,
-				//testdox: true,
-				//stopOnError: true,
-				staticBackup: false,
-				noGlobalsBackup: false
-			}
-		},
 
 		// CSS - Compile a .scss file into a normal .css file.
 		sass:   {
@@ -250,24 +232,6 @@ module.exports = function( grunt ) {
 			}
 		},
 
-		// CSS - Automaticaly create prefixed attributes in css file if needed.
-		//       e.g. add `-webkit-border-radius` if `border-radius` is used.
-		autoprefixer: {
-			options: {
-				browsers: ['last 2 version', 'ie 8', 'ie 9'],
-				diff: false
-			},
-			single_file: {
-				files: [{
-					expand: true,
-					src: ['*.css', '!*.min.css'],
-					cwd: conf.css_folder,
-					dest: conf.css_folder,
-					ext: '.css',
-					extDot: 'last'
-				}]
-			}
-		},
 
 
 		// CSS - Required for CSS-autoprefixer and maybe some SCSS function.
@@ -306,7 +270,7 @@ module.exports = function( grunt ) {
 				files: [
 					conf.css_folder + 'src/**/*.scss'
 				],
-				tasks: ['sass', 'autoprefixer', 'cssmin'],
+				tasks: ['sass', 'cssmin'],
 				options: {
 					debounceDelay: 500
 				}
@@ -407,7 +371,7 @@ module.exports = function( grunt ) {
 
 	// Development tasks.
 	grunt.registerTask( 'default', ['clean:temp', 'jshint', 'concat', 'uglify', 'sass', 'autoprefixer', 'cssmin'] );
-	grunt.registerTask( 'test', ['phpunit', 'jshint'] );
+	grunt.registerTask( 'test', ['jshint'] );
 	grunt.registerTask( 'docs', ['exec:phpdoc'] );
 
 	grunt.task.run( 'clear' );
